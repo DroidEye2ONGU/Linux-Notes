@@ -1,0 +1,19 @@
+一.Linux的标准输入输出(使用数字代表)
+		1. 标准输入 stdin   0    键盘
+		2. 标准输出 stdout 1    屏幕
+		3. 错误输出 stderr  2    屏幕
+二.重定向
+    所谓重定向，就是将原本的标准输入、输出的位置改变
+	    1. 输入重定向 < 
+            wc -l < 123.txt (将123.txt中的内容输入到wc -l指令中，获得文件的行数)
+        2. 输出重定向 >(覆盖模式) >>(追加模式)
+          netstat -tunlp  (获取系统的端口设置)
+            netstat -tunlp 1 > 输出目标 || netstat -tunlp 1 >> 输出目标 (将netstat命令产生的输出覆盖/追加到输出目标中)
+            netstat -tunlp 2 > 输出目标 || netstat -tunlp 2 >> 输出目标 (将netstat命令产生的错误覆盖/追加到输出目标中)
+        3. 特殊符号
+            ① & 代表与
+                应用I:  netstat -tunlp 1>out.txt 2>&1 (表示错误输出与标准输出重定向的位置相同)
+                应用II: netstat -tunlp &>out.txt (表示将标准输出与错误输出均重定向到out.txt)
+            
+
+        

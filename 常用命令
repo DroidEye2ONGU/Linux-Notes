@@ -1,0 +1,157 @@
+1.ls 列出目录内容
+    ①ll 是 ls -l的缩写
+    ②ls -lrt 长列表、反序、按时间排序
+
+2.cat 查看小文件内容（也能查看大文件，但是因为可读性差所以不推荐）    
+    cat -n 123.txt -n表示输出时显示行号
+
+3.more 查看大文件内容（因为不是一次性全部输出，而是一页一页的输出）
+    more 123.txt
+
+4.head -N 查看文件的前N行，N是数字
+    head -10 123.txt
+
+5.tail -N 查看文件的后N行，N是数字
+    ① tail -f 持续监视文件内容
+
+6.touch 创建一个空文件
+    touch 123.txt
+7.mkdir 创建文件夹
+    ①mkdir -p 创建多级文件夹（默认是只能创建一级文件夹）
+        mkdir -p /tmp/test1/test2/test3
+
+8.cp 复制文件或目录
+    用法：
+        cp [选项]... [-T] 源文件 目标文件
+        cp [选项]... 源文件... 目录
+        cp [选项]... -t 目录 源文件...
+
+    ①cp -r <source> <target> 递归复制目录及其子目录内的所有内容
+    ②cp -a <source> <target> 在复制时保留源文件的权限
+
+9.mv 移动或更名现有的文件或目录
+    用法：
+        mv [选项]... [-T] 源文件 目标文件
+        mv [选项]... 源文件... 目录
+        mv [选项]... -t 目录 源文件...
+    mv 123.txt 345.php
+    mv 789.txt /home/987.php
+
+10.rm 删除文件或命令
+    rm -rf 
+
+11.diff 比较文本的差异
+    diff 123.txt 456.txt
+
+12.ssh 远程安全登录到其他主机
+    ssh 192.168.226.131
+
+13.exit 退出命令
+    在使用ssh连接了其他主机后，可以使用exit退出连接
+
+14.id 查看用户信息
+    id root
+
+15.uname 命令
+    ①uname -a 输出本主机的所有信息,a是all的意思
+
+16.ping 查看网络是否连通
+
+17.echo 标准输出命令
+    ① echo "this is echo 命令"
+    ② echo $? 用于判断上一条命令是否正确
+        0：正确
+        0以外的数字：错误
+
+18.man (命令 --help)
+    查看帮助文档
+    man ls  
+    ls --help 这种方式一般是中文，但是文档可能不全
+
+19.clear(ctrl + l) 清屏    
+
+20.who 查看在本地系统上的所有用户信息
+    ①whoami 查看当前登录账户
+
+21.uptime 查询系统信息    
+    举 例：
+    load average: 0.00, 0.01, 0.05 1分钟的负载，5分钟的负载，15分钟的负载
+
+22. w 查询系统信息
+
+23. free 查看系统内存
+    ①free -h 以合适的单位显示
+    ②free -m 以MB作为单位显示
+
+24.wc 统计
+  -c, --bytes            print the byte counts
+  -m, --chars            print the character counts
+  -l, --lines            print the newline counts
+      --files0-from=文件	从指定文件读取以NUL 终止的名称，如果该文件被
+					指定为"-"则从标准输入读文件名
+  -L, --max-line-length	显示最长行的长度
+  -w, --words			显示单词计数
+      --help		显示此帮助信息并退出
+      --version		显示版本信息并退出
+
+25.grep <PATTERN>查找文件里符合条件的字符串
+    正则表达式选择与解释:
+    -E, --extended-regexp     PATTERN 是一个可扩展的正则表达式(缩写为 ERE)
+    -F, --fixed-strings       PATTERN 是一组由断行符分隔的定长字符串。
+    -G, --basic-regexp        PATTERN 是一个基本正则表达式(缩写为 BRE)
+    -P, --perl-regexp         PATTERN 是一个 Perl 正则表达式
+    -e, --regexp=PATTERN      用 PATTERN 来进行匹配操作
+    -f, --file=FILE           从 FILE 中取得 PATTERN
+    -i, --ignore-case         忽略大小写
+    -w, --word-regexp         强制 PATTERN 仅完全匹配字词
+    -x, --line-regexp         强制 PATTERN 仅完全匹配一行
+    -z, --null-data           一个 0 字节的数据行，但不是空行
+
+25.find 查找文件
+    find / -name -type f 123.txt
+
+26.uniq 对排序好的内容进行统计
+    uniq -c 123.txt | sort -n
+
+27.sort 对内容进行排序
+    uniq -c 123.txt | sort -n
+
+28.df 文件系统的磁盘使用情况统计
+    df -h
+
+29.** netstat 查看网络端口的使用情况
+    netstat -tunlp        
+    netstat -tunlp | grep nginx
+    -t ：显示tcp端口
+    -u ：显示UDP端口
+    -n ：指明拒绝显示别名
+    -l ：指明listen的
+    -p ：指明显示建立相关连接的程序名
+    安装netstat命令：yum -y install net-tools            
+
+30.hostname 查看主机名
+
+31.ps 显示所有进程信息 ps与grep是常用的组合用法，用于查找特定进程
+    ps -ef|grep tomcat
+
+32. kill 杀进程
+    kill -9 pid(pid是进程号,-9是信号量)
+
+33.top 监控Linux系统状况，比如cpu、内存的使用
+    按住键盘q退出
+
+34.du 统计(文件或目录的)大小
+    du  统计当前目录下各个文件和目录的大小
+    du -sh 统计当前目录下的所有目录和文件的大小
+    du -sm *
+
+35.**firewall -cmd 防火墙命令
+    ①firewall-cmd --state 查看防火墙状态
+    ②systemctl stop firewall.service CentOS7关闭防火墙
+
+36.echo $? 用于判断上一条命令是否正确
+    0：正确
+    0以外的数字：错误
+
+37.cal 查看日历
+
