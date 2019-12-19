@@ -16,6 +16,7 @@
 
 6.touch 创建一个空文件
     touch 123.txt
+
 7.mkdir 创建文件夹
     ①mkdir -p 创建多级文件夹（默认是只能创建一级文件夹）
         mkdir -p /tmp/test1/test2/test3
