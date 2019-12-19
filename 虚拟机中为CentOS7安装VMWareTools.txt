@@ -1,0 +1,28 @@
+1.打开虚拟机，安装VMwareTools使工具软件包下载到光盘
+
+2.挂载光盘到linux系统
+    mount /dev/cdrom /media
+
+3.将光盘内容中的压缩包复制到自己的目录（/media目录是只读的）
+    cp VMwareTools-10.2.0-7259539.tar.gz /root/ 
+
+4.卸载光盘(注意所在目录要切换到非/media，否则会无法卸载)
+    umount /dev/cdrom
+
+5.解压VMWareTolls的压缩包
+    tar -zxvf VMwareTools-10.2.0-7259539.tar.gz
+
+6.进入到解压目录
+    cd ./VMwareTools-10.2.0-7259539/vmware-tools-distrib
+
+7.安装必要的依赖
+    yum -y install perl-Data-Dumper
+
+8.运行VMWareTools安装程序
+    ./vmware-install.pl
+    一路按住键盘的 回车 键，选用默认
+
+9.验证
+    echo $? 验证是否安装成功，返回0就是成功
+
+10.验证里面虚拟机的时间是否与外部物理机的时间同步(当未安装VMWareTools时，虚拟机的时间可能与物理机时间不同步)

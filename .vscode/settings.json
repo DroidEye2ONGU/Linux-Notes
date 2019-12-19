@@ -1,9 +1,15 @@
 {
     "cSpell.words": [
+        "cdrom",
+        "filesystems",
+        "fuser",
+        "ifconfig",
         "mkdir",
         "netstat",
+        "passwd",
         "systemctl",
         "tunlp",
+        "umount",
         "uname",
         "whoami"
     ]

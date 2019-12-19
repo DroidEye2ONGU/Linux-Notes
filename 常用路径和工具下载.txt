@@ -1,0 +1,25 @@
+1.查看网络IP
+    ifconfig (ifconfig是net-tools中已被废弃使用的一个命令，许多年前就已经没有维护了。目前centos7默认也没有安装net-tools这个包了。现在使用的是iproute2这个包，ip命令就是属于这个包的。)
+    if addr
+
+2.网卡配置文件路径
+    /etc/sysconfig/network-scripts/ifcfg-enoXXX(XXX是网卡名称)
+
+3.重新启动网络
+     systemctl restart network.service
+
+4.光盘
+    光盘位置在 /dev/cdrom
+    ① 装载光盘
+        mount /dev/cdrom /media (将光盘内容挂载到/media目录，这个目录一般用来存放挂载的光盘内容)
+    
+    ② 卸载光盘
+        umount /dev/cdrom (卸载成功后，/media(即挂载目录)中的内容将会消失)
+        卸载失败的解决方法:
+            若出现以下提示：
+                            umount: /media：目标忙。
+                                (有些情况下通过 lsof(8) 或 fuser(1) 可以
+                                找到有关使用该设备的进程的有用信息)
+            需要排查
+                方法一：当前所在目录是否是/media及其子目录，如果在，则无法卸载光盘。切换到其他目录即可。
+                方法二：使用fuser -kv /media来结束所有使用该目录的进程，fuser的具体使用请参考《常用命令.38》                          
