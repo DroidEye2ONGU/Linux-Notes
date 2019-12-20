@@ -1,3 +1,7 @@
+前言
+    该文本文件会对所有用到过的且比较常用的命令进行总结。目前不对各种命令进行分类，使用搜索功能来查找对应的命令或功能作为参考。
+由于是命令的汇总，所以其他主题的文本中用到的命令，很有可能跟此文本重复，而此文本的总结用法将更加完整。
+
 1.ls 列出目录内容
     ①ll 是 ls -l的缩写
     ②ls -lrt 长列表、反序、按时间排序
@@ -48,7 +52,8 @@
     ssh 192.168.226.131
 
 13.exit 退出命令
-    在使用ssh连接了其他主机后，可以使用exit退出连接
+    ① 使用ssh连接了其他主机后，可以使用exit退出连接
+    ② 使用su命令切换用户后，可以使用exit退出切换的用户，回到最初登录的用户
 
 14.id 查看用户信息
     id root
@@ -192,3 +197,64 @@
     
         III.要终止使用给定文件系统的所有进程，请输入：
             fuser -kv /media
+
+39.id XX (XX是系统用户名 如 id root,XX缺省时则默认为当前登录的用户) 显示用户的uid gid groups        
+
+40. useradd 创建新用户命令
+    用法：useradd [选项] 登录
+        useradd -D
+        useradd -D [选项]
+
+    选项：
+    -b, --base-dir BASE_DIR	新账户的主目录的基目录
+    -c, --comment COMMENT         新账户的 GECOS 字段
+    -d, --home-dir HOME_DIR       新账户的主目录
+    -D, --defaults		显示或更改默认的 useradd 配置
+    -e, --expiredate EXPIRE_DATE  新账户的过期日期
+    -f, --inactive INACTIVE       新账户的密码不活动期
+    -g, --gid GROUP		新账户主组的名称或 ID
+    -G, --groups GROUPS	新账户的附加组列表
+    -h, --help                    显示此帮助信息并推出
+    -k, --skel SKEL_DIR	使用此目录作为骨架目录
+    -K, --key KEY=VALUE           不使用 /etc/login.defs 中的默认值
+    -l, --no-log-init	不要将此用户添加到最近登录和登录失败数据库
+    -m, --create-home	创建用户的主目录
+    -M, --no-create-home		不创建用户的主目录
+    -N, --no-user-group	不创建同名的组
+    -o, --non-unique		允许使用重复的 UID 创建用户
+    -p, --password PASSWORD		加密后的新账户密码
+    -r, --system                  创建一个系统账户
+    -R, --root CHROOT_DIR         chroot 到的目录
+    -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+    -s, --shell SHELL		新账户的登录 shell
+    -u, --uid UID			新账户的用户 ID
+    -U, --user-group		创建与用户同名的组
+    -Z, --selinux-user SEUSER		为 SELinux 用户映射使用指定 SEUSER
+
+41.su 切换登录用户
+    如：将当前的登录的root用户切换为user1用户
+        su user1
+    使用su命令切换用户后，可以使用exit退出切换的用户，回到最初登录的用户        
+
+42.passwd 为用户更改密码
+    ① 当前登录用户更改密码 
+        passwd
+    ② 为特定用户（如user1）更改密码
+        passwd user1
+    ③ 为用户指定空密码（口令）
+        passwd -d user1
+    ④ 锁定用户，使其不能登录
+        passwd -l user1
+    用法: passwd [选项...] <帐号名称>
+    -k, --keep-tokens       保持身份验证令牌不过期
+    -d, --delete            删除已命名帐号的密码(只有根用户才能进行此操作)
+    -l, --lock              锁定指名帐户的密码(仅限 root 用户)
+    -u, --unlock            解锁指名账户的密码(仅限 root 用户)
+    -e, --expire            终止指名帐户的密码(仅限 root 用户)
+    -f, --force             强制执行操作
+    -x, --maximum=DAYS      密码的最长有效时限(只有根用户才能进行此操作)
+    -n, --minimum=DAYS      密码的最短有效时限(只有根用户才能进行此操作)
+    -w, --warning=DAYS      在密码过期前多少天开始提醒用户(只有根用户才能进行此操作)
+    -i, --inactive=DAYS     当密码过期后经过多少天该帐号会被禁用(只有根用户才能进行此操作)
+    -S, --status            报告已命名帐号的密码状态(只有根用户才能进行此操作)
+    --stdin                 从标准输入读取令牌(只有根用户才能进行此操作)        
