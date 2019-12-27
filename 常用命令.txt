@@ -46,6 +46,10 @@
 10.rm 删除文件或命令
     rm -rf 
 
+10.1 rmdir 删除空文件夹命令
+    注意该命令不能不能删除非空文件夹，可以使用rm -r 删除非空文件夹
+    rmdir -p 递归删除所有空文件夹
+
 11.diff 比较文本的差异
     diff 123.txt 456.txt
 
@@ -281,11 +285,13 @@
     常用的选项是-r，它的作用是把用户的主目录一起删除
 
     示例：
-        ①userdel -r testUser 此命令删除用户testUser在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。
+        ①userdel -r testUser 此命令删除用户testUser在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的
+    记录，同时删除用户的主目录。
 
 44.usermod 修改账号,根据实际情况更改已有用户的有关属性，如用户号、主目录、用户组、登录Shell等
     usermod 选项 用户名                     
-    常用的选项包括-c, -d, -m, -g, -G, -s, -u以及-o等，这些选项的意义与useradd命令中的选项一样，可以为用户指定新的资源值。
+    常用的选项包括-c, -d, -m, -g, -G, -s, -u以及-o等，这些选项的意义与useradd命令中的选项一样，可以为用户指定新的资
+源值。
     另外，有些系统可以使用选项：-l 新用户名
     这个选项指定一个新的账号，即将原来的用户名改为新的用户名。
 
@@ -300,7 +306,8 @@
         -o 一般与-g选项同时使用，表示新用户组的GID可以与系统已有用户组的GID相同。
     示例：
         ① groupadd group1 此命令向系统中增加了一个新组group1，新组的组标识号是在当前已有的最大组标识号的基础上加1。
-        ② groupadd -g 101 -o group2 向系统中增加了一个新组group2,同时制定新组的组标识号是101，且可以与系统已有用户组的GID相同。
+        ② groupadd -g 101 -o group2 向系统中增加了一个新组group2,同时制定新组的组标识号是101，且可以与系统已有用户
+    组的GID相同。
 
 46.groupdel 删除一个已有的用户组
     groupdel 选项 用户组
@@ -320,7 +327,37 @@
         ② groupmod -g 10000 -n group3 group2 此命令将组group2的标识号改为10000，组名修改为group3     
 
 48.newgrp 用户可以在登录后，使用命令newgrp切换到其他用户组，这个命令的参数就是目的用户组。
+    *
+    这个命令能够将当前登录的用户所属的组更改为指定的组，但是，只是在这次登录的范围内有效，一旦退出登录，再重新登陆时，可
+以看到，用户所属的组还是默认的用户组。
+    如果想要更改用户默认的用户组，那么需要使用usermod命令。usermod -g 组名
     示例：
         newgrp root
         这条命令将当前用户切换到root用户组，前提条件是root用户组确实是该用户的主组或附加组。类似于用户账号的管理，用户组的管理也可以通过集成的
     系统管理工具来完成。 
+
+49.ln 创建链接
+    ① ln -s 原文件绝对路径 软连接绝对路径 
+        创建软连接，注意一定要使用绝对路径
+    ② ln 原文件绝对路径 软连接绝对路径
+        创建硬链接，注意一定要使用绝对路径
+
+50.chmod 修改文件或目录权限
+    修改方式:
+        ① 使用<u、g、o> +、-或=来增加、去除或赋值权限
+            chomd u+g,g+w,o=wr boot.log
+            chmod u-x,g-w,o-w boot.log
+        
+        ② 使用二进制权限数字来去除或赋值权限
+            chmod 777 boot.log 
+            chmod 610 boot.log
+        
+        ③ 使用-R命令来递归为目录或文件修改权限
+            chomd -R 777 /home/test 即会为test目录及其下的所有子目录和文件的权限修改为777
+
+51.chown 修改文件或目录的所有者和所属组
+    chown [选项]... [所有者][:[组]] 文件
+    ① chown :testg KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所属组修改为testg
+    ② chown testUser KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为testUser
+    ③ chown root:root KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为root,所属组修改为root
+    ④ chown -R root:test /home/d 将/home下的d目录及其所有子目录和文件的所有者修改为root，所属组修改为test

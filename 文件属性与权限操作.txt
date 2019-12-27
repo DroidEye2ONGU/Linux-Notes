@@ -1,0 +1,39 @@
+1. 文件属性
+    使用，ll -lrti 打印包括i节点的文件属性
+    658907  -   rwxr-xr-x. 1 root root 66640 Aug 20 14:25 ptx
+    第一列：i节点
+        i节点；i节点可以理解文件id，一个i节点号可以对应多个文件(比如硬链接)，一个文件只能对应一个i节点号
+    
+    第二列：文件的类型与权限
+        - #代表的是文件；d#代表是目录； l #软链接文件 ；b #代表块设备；c #代表的是硬件设备（键盘）
+        r：表示读权限 ；w：表示写权限；x：表示执行权限
+        4：表示读权限 ；2：表示写权限；1：表示执行权限
+        rw-------:分为三列 rw- --- ---，第一列为所属者u的权限，第二列为所属组g的权限，第三列为其它o的权限
+    
+    第三列：有多少文件（硬）链接到这个节点
+    第四列：文件的所有者
+    第五列：文件的所有组
+    第六列：容量大小，单位默认为B
+    第八列：创建或最近修改的时间
+    第九列：文件名
+
+2.修改文件权限
+    使用chmod命令来修改权限
+    修改方式:
+        ① 使用<u、g、o> +、-或=来增加、去除或赋值权限
+            chomd u+g,g+w,o=wr boot.log
+            chmod u-x,g-w,o-w boot.log
+        
+        ② 使用二进制权限数字来去除或赋值权限
+            chmod 777 boot.log 
+            chmod 610 boot.log
+        
+        ③ 使用-R命令来递归为目录或文件修改权限
+            chomd -R 777 /home/test 即会为test目录及其下的所有子目录和文件的权限修改为777
+
+3.修改文件的所有者和所属组
+    使用chown来修改文件的所有者和所属组
+        ① chown -R root:test /home/d 将/home下的d目录及其所有子目录和文件的所有者修改为root，所属组修改为test
+        ② chown :testg KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所属组修改为testg
+        ③ chown testUser KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为testUser
+        ④ chown root:root KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为root,所属组修改为root
