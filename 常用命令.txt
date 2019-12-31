@@ -361,3 +361,86 @@
     ② chown testUser KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为testUser
     ③ chown root:root KwWebServiceSecurityNew.java 将KwWebServiceSecurityNew.java文件所有者修改为root,所属组修改为root
     ④ chown -R root:test /home/d 将/home下的d目录及其所有子目录和文件的所有者修改为root，所属组修改为test
+
+52.gzip gunzip zcat 压缩操作
+    gzip不能压缩目录，速度比xz快，但是压缩后的体积比xz大
+    ①.不保留源文件压缩
+        gzip 1.txt 
+    ②.不保留源压缩文件解压
+        gzip -d 1.txt.gz / unzip 1.txt.gz 
+    ③.指定压缩比例，下面的例子中的#是压缩比例，范围1-9，默认为6
+        gzip -# 1.txt
+    ④.使用zcat查看压缩文件内容
+        zcat 1.txt.gz
+    ⑤.使用zcat将压缩文件的内容转存到其他文件中，原理是先解压再查看
+        -c的作用是将压缩文件内容输出到stdout(标准输出)
+        zcat -c KwWebServiceSecurityNew.java.gz > 123.java   
+    ⑥.保留源文件压缩
+        gzip -c 1.txt > /root/1.txt.gz
+    ⑦.保留压缩文件解压
+        gunzip -c /root/1.txt.gz > /tmp/1.txt.new   
+
+53.xz xzcat 压缩操作
+    xz不能压缩目录，速度比gzip慢很多，但是压缩后的体积比gzip更小
+    ①.不保留源文件压缩文件
+        xz 1.txt / xz -z 1.txt                                
+    ②.不保留源文件解压
+        xz -d 1.txt.xz / unxz 1.txt.xz
+    ③.指定压缩比例，下面的例子中的#是压缩比例，范围1-9，默认为6
+        xz -# 1.txt
+    ④.查看压缩内容
+        xzcat 1.txt.xz
+    ⑤.将压缩的内容转存到其他文件中
+        xzcat 1.txt.xz -> 2.txt
+    ⑥.保留源文件压缩
+        xz -c 1.txt > /root/1.txt.xz
+    ⑦.保留源文件解压
+        xz -d -c /root/1.txt.xz > 1.txt.new3
+
+54.zip unzip 压缩操作
+    一般CentOS7中不内置zip，使用yum install -y zip来安装zip
+    zip可以压缩目录
+    此外要注意的是，zip（及unzip）命令的使用方式与gz与unzip不同。注意区分
+    ①.压缩文件
+        zip 1.txt.zip 1.txt 将1.txt文件压缩到1.txt.zip当中
+    ②.压缩目录
+        zip -r 123.zip 123/ 将123文件夹压缩到当前目录的123.zip文件中
+    ③.解压缩
+        zip解压缩不会自动删除压缩文件，且如果不指定解压文件名，默认是压缩文件名称
+        unzip 1.txt.zip                        
+    ④.指定解压缩目录
+        unzip 123.zip -d /root/456/
+    ⑤.查看压缩文件中的内容
+        unzip -l a.zip
+
+55.tar 归档与压缩
+    tar命令
+        tar命令能够归档、解档、归档并压缩、解压并解档。tar命令必须指定相应的参数（参数的顺序也要正确），才能够执行相应的动作。
+        常用选项
+            -c 创建新文件，在归档或归档并压缩时加入
+            -x 解出文件，在解档或解压并解档是加入
+
+            -f 指定操作的文件，因此归档、解档、归档并压缩、解压并解档操作时一般都需要加入-f
+            -v 显示操作过程。如解压并解档时，加入-v能够将解档过程输出   
+
+            -z 使用gzip进行压缩或解压。要放在选项第一个。压缩后的文件后缀.tar.gz
+            -J 使用xz进行压缩或皆有。要放在选项第一个。压缩后的文件后缀.tar.xz  
+            
+            -C 指定解压路径
+
+    示例
+        ① 对文件归档
+            tar -cvf a.tar a / tar -cf a.tar a 
+        ② 对文件解档 / 指定解档目录
+            tar -xvf a.tar / tar -xf a.tar
+            tar xvf a.tar -C a / tar -xf a.tar -C /a
+        ③ 使用gzip对文件归档并压缩
+            tar -zcvf a.tar.gz a.tar / tar -zcf a.tar.gz a.tar
+        ④ 使用gzip对文件解压并解档 / 指定解档目录
+            tar -zxvf a.tar.gz / tar -zxf a.tar.gz
+            tar -zxvf a.tar.gz -C b / tar -zxf a.tar.gz -C b
+        ⑤ 使用xz对文件归档并压缩
+            tar -Jcvf a.tar.xz a.tar / tar -Jcf a.tar.xz a.tar
+        ⑥ 使用xz对文件解压并解档 / 指定解压目录
+            tar -Jxvf a.tar.xz / tar -Jxf a.tar.xz
+            tar -Jxvf a.tar.xz -C b / tar -Jxf a.tar.xz -C b
