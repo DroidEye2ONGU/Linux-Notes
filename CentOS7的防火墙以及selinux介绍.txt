@@ -1,0 +1,42 @@
+1.简介：firewall防火墙的使用
+    防火墙：主要用户信息安全防护，主要有软件防火墙和硬件防火墙。firewall防火墙是软件防火墙在centos7 之前默认采用的
+防火墙是iptables，而在centos 7则是采用firewall。
+
+2.常用操作
+    ① 查看firewalld.service服务状态
+        systemctl status firewalld
+        systemctl status firewalld.service
+    
+    ② 开启、重启、关闭firewalld服务
+        开启：systemctl start firewalld / systemctl start firewalld.service
+        关闭：systemctl stop firewalld / systemctl stop firewalld.service
+        重启：systemctl restart firewalld / systemctl restart firewalld.service
+
+    ③ 查看firewall防火墙的状态
+        firewall-cmd --state
+
+    ④ 查看防火墙开放端口规则
+        firewall-cmd --list-port
+
+    ⑤ 开放tcp/80端口
+        firewall-cmd --permanent --add-port=80/tcp（--permanent永久生效，没有此参数重启后就失效）
+
+    ⑥ 加载设置
+        firewall-cmd --reload
+
+    ⑦ 查询指定端口80是否开放
+        安装telnet命令：yum -y install xinetd telnet telnet-server （确认联网状态）
+        安装netstat与ifconfig命令：yum -y install net-tools（确认联网状态）
+        使用telnet来使用另一台机器来连接开放端口机器
+    
+    ⑧ 关闭80端口
+        firewall-cmd --remove-port=80/tcp
+
+3.SELinux
+    可在SELinux配置中设置其防火墙模式，对于阿里云服务器均设置为disabled
+        配置文件路径： /etc/selinux/config
+
+    三种模式：
+       enforcing ：强制模式。违反selinux 规则的行为将会被阻止并记录到日志中去
+       permissive：宽容模式。违反selinux 规则的行为将会记录到日志中去
+       disabled：关闭模式。 

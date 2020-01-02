@@ -83,7 +83,7 @@
 
 20.who 查看在本地系统上的所有用户信息
     ①whoami 查看当前登录账户
-
+linux中的分号、&&、&、|、||的说明与用法
 21.uptime 查询系统信息    
     举 例：
     load average: 0.00, 0.01, 0.05 1分钟的负载，5分钟的负载，15分钟的负载
@@ -119,7 +119,8 @@
     -z, --null-data           一个 0 字节的数据行，但不是空行
 
 25.find 查找文件
-    find / -name -type f 123.txt
+    find / -type f -name "123.txt"
+    *find命令的更多详细用法请参考《find命令详解和高级用法》
 
 26.uniq 对排序好的内容进行统计
     uniq -c 123.txt | sort -n
@@ -444,3 +445,25 @@
         ⑥ 使用xz对文件解压并解档 / 指定解压目录
             tar -Jxvf a.tar.xz / tar -Jxf a.tar.xz
             tar -Jxvf a.tar.xz -C b / tar -Jxf a.tar.xz -C b
+
+56.which 查找命令所在路径
+    which nginx
+    (Windows中对应的命令是where)   
+
+57.firewall-cmd 防火墙管理命令
+    ① 查看firewall防火墙的状态
+        firewall-cmd --state
+
+    ② 查看防火墙开放端口规则
+        firewall-cmd --list-port
+
+    ③ 开放tcp/80端口
+        firewall-cmd --permanent --add-port=80/tcp（--permanent永久生效，没有此参数重启后就失效）
+
+    ④ 加载设置
+        firewall-cmd --reload
+
+    ⑤ 查询指定端口80是否开放
+        安装telnet命令：yum -y install xinetd telnet telnet-server （确认联网状态）
+        安装netstat与ifconfig命令：yum -y install net-tools（确认联网状态）
+        使用telnet来使用另一台机器来连接开放端口机器         

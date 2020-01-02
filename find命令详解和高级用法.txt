@@ -1,0 +1,38 @@
+1.简介  
+    find命令用来根据输入的条件在相关路径下搜索文件（广义的文件,Linux中一切皆文件)
+
+2.常用参数用法
+    find 路径 选项
+        -type #根据文件类型搜索
+            f:文件 d:目录
+            find /var/log -type d
+            find /var/log -type f -name "*.log"
+
+        -name #根据文件名搜索,后面的名称要使用双引号包住
+            find /var/log -type f -name "*.log" 
+
+        -perm #根据文件权限搜索，参数是二进制权限
+            find /var/log -perm 600 -type f -name "*.log"     
+
+        -user #根据文件所有者进行搜索            
+            find /var/log -user root
+
+3.find命令的高级用法
+    1. 通过-exec可将find的搜索结果交给其他命令进行使用        
+     eg1.
+        find /var/log -type f -name "*.log" -exec wc -l {} \; 命令的意义是将搜索出来的每个文件的每个行数显示出来
+            ;  #可以执行多条命令
+            \  #转义符，转义;，使得这条命令结束
+            {} #把find命令匹配到的每一次结果传递给{}
+            -exec #执行
+     eg2.            
+        find /var/log -type f -name "*.log" -exec cp -a {} /home/test 
+            将/var/log目录下所有以*.log结尾的文件保留权限复制到/home/test目录下
+
+    2. -mtime选项
+        根据文件的变更时间来查找；
+            -n #表示更改时间距离现在n天以内
+            +n #表示更改时间距离现在n天以前
+     eg.
+        find /var/log -mtime -2 -name "*.log" -exec ls -lrt {} \;
+        find /var/log -mtime +2 -name "*.log" -exec ls -lrt {} \;
