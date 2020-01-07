@@ -1,0 +1,27 @@
+1.cut应用场景：通常对数据进行列的提取
+    语法：cut [选项]...[file]
+
+    选项：
+        -d #指定分割符
+        -f #指定截取区域
+        -c #以字符为单位进行分割
+        注意：不加-d选项，默认为制表符，不是空格
+
+    注意，-d与-c都是以1开始而不是以0开始的
+
+2.示例
+eg:
+    以':'为分隔符，截取出/etc/passwd的第一列跟第三列
+    cut -d ':' -f 1,3 /etc/passwd
+eg:
+    以':'为分隔符，截取出/etc/passwd的第一列到第三列
+    cut -d ':' -f 1-3 /etc/passwd
+eg:
+    以':'为分隔符，截取出/etc/passwd的第二列到最后一列
+    cut -d ':' -f 2- /etc/passwd
+eg:
+    截取/etc/passwd文件从第二个字符到第九个字符
+    cut -c 2-9 /etc/passwd
+eg:
+    比如领导想叫你截取linux上面所有可登陆普通用户
+    cat /etc/passwd | grep '/bin/bash' | cut -d ':' -f 1 | grep -v root

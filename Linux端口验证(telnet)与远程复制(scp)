@@ -1,0 +1,24 @@
+1.telnet命令
+    1.作用：使用telnet命令，可以访问特定IP的特定端口号，是否连通的结果可以用来排查网络故障与端口问，主要用于测试到某台机器的
+某个端口是否畅通
+    2.依赖：telnet这个命令是依赖于 xinetd服务于telnet-server服务
+    3.安装：yum -y install xinetd telnet telnet-server 
+    4.用法：
+        telnet IP地址 端口号
+        应用场景：测试某个端口是否畅通。若无法连通，可能是对应机器的防火墙未开放对应端口，
+    使用firewall-cmd --permanent --add-port=80/tcp&&firewall-cmd --reload来开放对应端口。
+
+2.scp命令
+    1.作用：使用scp命令可以向对应机器传输文件，或从对应机器获取文件，取决于写法的格式
+    2.参数:
+        ① -r 递归复制，当要复制文件夹时，需要使用这个参数才能够复制。但是速度会大幅降低，归档压缩后的复制单个文件的速度更快
+            eg.scp -r vmware-tools-distrib root@192.168.72.129:/root/
+    3.用法：
+        ① 从本机拷贝到别的机器
+            scp <-r> 本机文件地址 对应机器用户@对应机器IP:对应机器存放文件的路径
+                eg.scp /root/VMTools.tar.gz root@192.168.72.129:/root/
+        
+        ② 从别的机器拷贝文件到本机
+            scp <-r> 对应机器用户@对应机器IP：对应机器要复制的文件路径 本机要存放文件的路径
+                eg.scp root@192.168.72.129:/root/VMTools.tar.gz /root/
+        

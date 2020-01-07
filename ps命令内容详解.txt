@@ -1,0 +1,46 @@
+1.ps命令
+    ps命令是进程管理命令，用来查看进程相关信息
+    一般执行ps -ef 或者ps aux 命令是查看我们的进程是否启动成功，或者找出进程号，对进程的kill强制关闭
+
+2.ps -ef
+    [root@localhost ~]# ps -ef | more
+    UID PID PPID C STIME TTY TIME CMD
+    root 2 0 0 Jul30 ? 00:00:00 [kthreadd]
+    root 3 2 0 Jul30 ? 00:00:06 [ksoftirqd/0]
+    root 5 2 0 Jul30 ? 00:00:00 [kworker/0:0H]
+    root 7 2 0 Jul30 ? 00:00:04 [migration/0]
+    root 8 2 0 Jul30 ? 00:00:00 [rcu_bh]
+    root 9 2 0 Jul30 ? 00:00:00 [rcuob/0]
+   
+    UID：用户ID
+    PID：进程ID
+    PPID：父进程号
+    C：CPU的占用率
+    STIME：进程的启动时间
+    TTY：TTY终端
+    TIME：进程执行起到现在总的CPU占用时间
+    CMD：启动这个进程的命令
+
+3.ps -aux
+    [root@localhost ~]# ps aux | more
+    USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+    root 2 0.0 0.0 0 0 ? S Jul30 0:00 [kthreadd]
+    root 3 0.0 0.0 0 0 ? S Jul30 0:06 [ksoftirqd/0]
+    root 5 0.0 0.0 0 0 ? S< Jul30 0:00 [kworker/0:0H]
+    root 7 0.0 0.0 0 0 ? S Jul30 0:04 [migration/0]
+    root 8 0.0 0.0 0 0 ? S Jul30 0:00 [rcu_bh]
+    root 9 0.0 0.0 0 0 ? S Jul30 0:00 [rcuob/0]
+    root 10 0.0 0.0 0 0 ? S Jul30 0:00 [rcuob/1]
+    root 11 0.0 0.0 0 0 ? S Jul30 0:00 [rcuob/2]        
+
+    USER：哪个用户启动了这个命令
+    PID：进程的ID
+    %CPU：CPU的占用率
+    %MEM：内存的使用率
+    VSZ：如果一个程序完全驻留在内存中一共需要使用多少内存空间
+    RSS：进程当前占用了多少内存
+    TTY：tty终端
+    STAT：表示当前进程的状态（S#处于休眠的状态；D#不可中断的状态 ；Z#僵尸进程 ；X#死掉的进程）
+    START：启动这个命令的时间点
+    TIME：进程执行起到现在总的CPU占用时间
+    COMMAND：启动这个进程的命令
