@@ -1,0 +1,30 @@
+1.yum介绍
+    yum工具相当于npm的前端工具，它弥补了npm包必须手动解决依赖的问题。从本质上来说，yum还是通过npm包来安装的。所以通过yum来安装后的软件，还是可以
+通过npm来管理。
+
+2.yum的安装
+    yum基于C/S架构，yum的安装称之为傻瓜式安装。因为我们只需要输入软件名称，就能够自动去对应的yum源上查找符合当前系统版本和环境的软件包，并在安装
+前自动安装需要的依赖软件。
+
+3.yum的缺点
+    yum在安装时人为不能干预，无法设定想要的参数
+
+4.本地yum源的配置
+    配置文件路径：/etc/yum.repos.d/
+    配置文件内容示例
+    [Centos7-yum] #yum源名称，唯一的，用来区分不同的 yum 源
+    name=Centos7-source #对yum源描述信息
+    baseurl=file:///mnt #yum源的路径（repodata目录所在的目录）
+    enabled=1 #表示启用 yum 源
+    gpgcheck=0 #为1表示使用公钥检验 rpm 的正确性
+
+5.yum命令常用选项
+    yum repolist #查看yum源列表
+    yum clean all #清空之前yum缓存
+    yum makecache #创建yum缓存，为后续安装更加快速
+    yum -y install #安装软件 yum -y install zsh
+    yum info zsh #查看zsh软件包信息（不管是否安装都会显示信息）
+    yum info installed zsh #查看已经安装好的软件信息
+    yum -remove zsh #卸载zsh软件
+    yum search gcc #搜索gcc软件
+    yum update #升级软件    

@@ -1,0 +1,111 @@
+1.sed命令简介
+    stream editor for filtering and transforming text
+
+2.sed命令的应用场景
+    sed的应用场景：主要对数据进行处理（选取，新增，替换，删除，搜索）
+
+3.sed命令的语法
+    sed [选项] [动作] 文件名
+        ① 选项，如-e、-i等
+        ② 动作，如指定第二行 '2p'等，必须用''引起来
+
+4.常见的选项和参数
+    选项：
+        ① -n #把匹配到的行输出打印到屏幕，通常与p结合使用
+        ② -i #对源文件进行修改（高危操作，慎用，用之前需要备份源文件）
+        ③ -e #表示可以执行多条动作
+    
+    指令动作（对应语法中的动作，用''包住）：
+        ① p #以行为单位进行打印，通常与-n一起使用
+        ② d #删除指定的行
+        ③ a #在指定行的下面插入新的内容
+        ④ i #在指定行的上面插入新的内容 *注意不要与-i选项搞混
+        ⑤ c #把指定行替换成新的内容
+        ⑥ s/要被取代的内容（模糊）/要替换的新字符串/g  #指定内容进行替换
+        ⑦ /要搜索的内容/p #在文件中搜索内容 
+
+5.示例
+    ----------------------------------------------------------------
+   1|文件系统                 容量  已用  可用 已用% 挂载点           |                 
+   2|devtmpfs                 898M     0  898M    0% /dev          |                     
+   3|tmpfs                    910M     0  910M    0% /dev/shm      |                     
+   4|tmpfs                    910M  9.5M  901M    2% /run          |                         
+   5|tmpfs                    910M     0  910M    0% /sys/fs/cgroup|                                     
+   6|/dev/mapper/centos-root   37G  2.5G   35G    7% /             |                             
+   7|/dev/sda1               1014M  150M  865M   15% /boot         |                                 
+   8|tmpfs                    182M     0  182M    0% /run/user/0   |                     
+    ----------------------------------------------------------------
+
+    ① df -h | sed -n '2p' #输出df -h命令产生结果的第二行
+        输出结果：
+            devtmpfs                 898M     0  898M    0% /dev
+
+    ② df -h | sed '2d'
+        输出结果：
+            文件系统                 容量  已用  可用 已用% 挂载点
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            /dev/mapper/centos-root   37G  2.5G   35G    7% /
+            /dev/sda1               1014M  150M  865M   15% /boot
+            tmpfs                    182M     0  182M    0% /run/user/0        
+
+    ③ df -h | sed '2a 12345767890' #在第二行下面一行插入1234567890
+        输出结果：
+            文件系统                 容量  已用  可用 已用% 挂载点
+            devtmpfs                 898M     0  898M    0% /dev
+            1234567890
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            /dev/mapper/centos-root   37G  2.5G   35G    7% /
+            /dev/sda1               1014M  150M  865M   15% /boot
+            tmpfs                    182M     0  182M    0% /run/user/0
+
+    ④ df -h | sed '2i 1234567890' #在第二行上面一行插入1234567890
+        输出结果：
+            文件系统                 容量  已用  可用 已用% 挂载点
+            1234567890
+            devtmpfs                 898M     0  898M    0% /dev
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            /dev/mapper/centos-root   37G  2.5G   35G    7% /
+            /dev/sda1               1014M  150M  865M   15% /boot
+            tmpfs                    182M     0  182M    0% /run/user/0
+
+    ⑤ df -h | sed '2c 1234567890' #将第二行的内容替换为1234567890            
+        输出结果：
+            文件系统                 容量  已用  可用 已用% 挂载点
+            1234567890
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            /dev/mapper/centos-root   37G  2.5G   35G    7% /
+            /dev/sda1               1014M  150M  865M   15% /boot
+            tmpfs                    182M     0  182M    0% /run/user/0            
+
+    ⑥ df -h | sed 's/centos-root/CentOs7/g' #将df -h命令产生的内容中，匹配centos-root的字符串替换为CentOs7           
+        输出结果：
+            文件系统                 容量  已用  可用 已用% 挂载点
+            devtmpfs                 898M     0  898M    0% /dev
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            /dev/mapper/CentOs7   37G  2.5G   35G    7% /
+            /dev/sda1               1014M  150M  865M   15% /boot
+            tmpfs                    182M     0  182M    0% /run/user/0
+
+    ⑦ df -h | sed 's/centos-root/Centos7/g' > df.txt #将⑥产生的内容保存到当前目录的df.txt文件下
+
+    ⑧ sed -i 's/Centos7/g' df.txt #将⑦中保存的文件中的内容永久替换         
+
+    ⑨ sed -n '/tmpfs/p' df.txt #搜索df.txt文件中符合tmpfs(模糊)字符串的行
+        输出内容：
+            devtmpfs                 898M     0  898M    0% /dev
+            tmpfs                    910M     0  910M    0% /dev/shm
+            tmpfs                    910M  9.5M  901M    2% /run
+            tmpfs                    910M     0  910M    0% /sys/fs/cgroup
+            tmpfs                    182M     0  182M    0% /run/user/0     
+
+    ⑩ sed -e 's/Centos8/Centos7/g' -e 's/tmpfs/TMP/g' df.txt > 123.txt #使用-e选项执行多条替换操作，并将结果输出保存到123.txt       

@@ -52,13 +52,16 @@ cut命令更加强大。
     |tmpfs                     182     0   182    0%   /run/user/0      |
     ---------------------------------------------------------------------
     ① df -h | awk 'NR==6 {print $3}' #输出第四行的第一列数据，输出为2527 (对于输出，表头也算一行)
+
     ② df -h | awk '(NR >=2 && NR <= 5) {print $1}' #输出第2行至第5行的第一列数据，即输出devtmpfs
                                                                                      tmpfs
                                                                                      tmpfs
                                                                                      tmpfs
     ③ df -h | awk '{print $NF}' # 输出每一行的最后一列（注意这个例子省略了条件）
+
     ④ cat /etc/passwd | awk 'BEGIN {FS=":"} {print $1}' #在开始读取每行前指定分隔符为冒号，然后输出每一行第一列
         BEGIN {FS=":"} 提前指定使用:作为分隔符，注意这里的用法与awk -F ":"无关
+
     ⑤ df -h | grep -v '文件系统' | awk '{printf $1} {printf "文件系统使用率："} {print $5}'
         df -h #查看目前在系统上的文件系统的磁盘使用情况统计。-h表示使用人类可读的格式(预设值是不加这个选项的...)
         grep -v '文件系统' #将含有文件系统的那行输出过滤，相当于去掉第一行表头,起到过滤而不是查找作用的是-v选项
@@ -99,12 +102,16 @@ cut命令更加强大。
             tmpfs文件系统使用率：0%
             一切正常 
 
-    ⑧ awk -F":" '{print $1}' /etc/passwd #指定分隔符为“:”，（指定后不会使用其他的分割逻辑），并输出每一行的第一列
+    ⑧ awk -F ":" '{print $1}' /etc/passwd #指定分隔符为“:”，（指定后不会使用其他的分割逻辑），并输出每一行的第一列
 
 6.其他应用
     ① 使用awk直接杀掉tomcat（等可被唯一定位或循环）的进程
         前置准备：kill -9 $()指kill -9命令会使用$()中命令的结果作为参数
+
+        下面三条命令的作用相同，只是写法或原理不同
         kill -9 $(ps -ef|grep tomcat|awk '$8 != "grep" {print $2}')
+        kill -9 $(ps -ef|grep tomcat|grep -v grep|awk '{print $2}')
+        ps -ef|grep tomcat | grep -v grep|awk '{print $2}'|xargs kill -9
         
 
 

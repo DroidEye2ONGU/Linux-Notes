@@ -108,14 +108,14 @@ linux中的分号、&&、&、|、||的说明与用法
 25.grep <PATTERN>查找文件里符合条件的字符串
     正则表达式选择与解释:
     *-i, --ignore-case        忽略大小写
-    *-v, --invert-match       排除输出，即排除满足这个条件的输出
+    *-v, --invert-match       排除输出，即排除满足这个条件的输出    
+    *-w, --word-regexp        精确匹配每一个字符
     -E, --extended-regexp     PATTERN 是一个可扩展的正则表达式(缩写为 ERE)
     -F, --fixed-strings       PATTERN 是一组由断行符分隔的定长字符串。
     -G, --basic-regexp        PATTERN 是一个基本正则表达式(缩写为 BRE)
     -P, --perl-regexp         PATTERN 是一个 Perl 正则表达式
     -e, --regexp=PATTERN      用 PATTERN 来进行匹配操作
     -f, --file=FILE           从 FILE 中取得 PATTERN
-    -w, --word-regexp         强制 PATTERN 仅完全匹配字词
     -x, --line-regexp         强制 PATTERN 仅完全匹配一行
     -z, --null-data           一个 0 字节的数据行，但不是空行
 
@@ -521,4 +521,11 @@ linux中的分号、&&、&、|、||的说明与用法
 61.akw命令 数据处理命令
     akw '条件1 {执行动作} 条件2 {执行动作}...' 文件名 
  或 awk [选项] '条件1 {执行动作} 条件2 {执行动作...}' 文件名
-    **详细内容查看《数据处理命令awk》               
+    **详细内容查看《数据处理命令awk》       
+
+62.sed命令 主要对数据进行处理（选取，新增，替换，删除，搜索）
+    sed [选项] [动作] 文件名
+        ① 选项，如-e、-i等
+        ② 动作，如指定第二行 '2p'等，必须用''引起来
+    **详细内容查看《处理海量数据之sed命令》        
+            

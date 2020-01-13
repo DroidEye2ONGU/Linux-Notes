@@ -1,0 +1,53 @@
+1.rmp软件包的介绍
+    ① rpm安装：安装别人编译好的软件包，rpm即Redhat Package Manager，是Redhat的软件包管理方式
+    ② rpm安装优点：
+        软件已经编译打包，所以传输和安装方便，让用户免除编译
+        在安装之前，会先检查系统的磁盘、操作系统版本等，避免错误安装
+    ③ rpm安装缺点：
+        软件包安装的环境必须与打包时的环境一致或相当
+        必须安装了软件的依赖包
+
+2.rpm包的命名规则
+    以which-2.20-7.el7.x86_64.rpm举例
+        which #代表的是软件名称
+        2.20 #代表的是软件版本号；
+        7 #代表的是发布版本号，指的是这个rpm软件包是第几次编译生成的
+        el7 #代表的是企业版的7操作系统
+        X86 #代表的是CPU架构
+        64 #代表的是系统的位数
+
+3.网络上rpm包的下载地址
+    http://rpmfind.net/
+    http://rpm.pbone.net/
+    http://www.rpmseek.com/index.html
+
+4.安装rpm软件包
+    常用参数
+        -i #install 安装软件包
+        -v #输出更多的详情信息
+        -h #输出哈希标记（#）即显示以#号表示的安装进度
+        --nodeps #不验证软件的依赖
+        rpm -ivh zsh-5.0.2-7.el7.x86_64.rpm
+        rpm -ivh mariadb-server-5.5.35-3.el7.x86_64.rpm --nodeps #跳过软件包依赖检查虽然可以安装软件包，但是安装完成后会因为缺少依赖而无法运行或运行错误
+
+5.rpm的查询功能
+    前置条件, rpm -q，后面的选项要跟上下面特定的命令，如“使用rpm -qa which 来查询安装which软件包的信息”
+        -a #查询所有已安装的软件包 rpm -qa zsh
+        -f #查询文件所属软件包 rpm -qf /usr/bin/zsh
+            如何使用rpm -qf来查询特定的软件对应的rpm包名举例
+                ① 使用which mysql，查询出mysql服务目录在/usr/bin/mysql
+                ② 使用rpm -qf /usr/bin/mysql来查询出对应的包名为mysql-community-client-5.7.28-1.el7.x86_64
+        -p #查询软件包
+        -i #显示软件包信息
+        -l #显示软件包中的文件列表
+        -d #显示被标注为文档的文件列表
+        -c #显示被标注为配置文件的文件列表
+
+6.rpm包升级
+    使用-U 选项来升级rpm软件服务，即相对安装使用的rpm -ivh换为rpm -Uvh
+    rpm -Uvh zsh-5.0.2-7.el7.x86_64.rpm #注意rpm -Uvh后面改的要是新版本的软件包
+
+7.通过rpm安装的服务的卸载
+    使用 -e 选项来卸载命令，注意只需要填写服务的名称，而不是软件包的名称
+        rpm -e zsh
+        rpm -evh sh
