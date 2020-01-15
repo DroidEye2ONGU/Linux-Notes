@@ -7,7 +7,7 @@
         systemctl status firewalld
         systemctl status firewalld.service
     
-    ② 开启、重启、关闭firewalld服务
+    ② 开启、重启、关闭firealld服务
         开启：systemctl start firewalld / systemctl start firewalld.service
         关闭：systemctl stop firewalld / systemctl stop firewalld.service
         重启：systemctl restart firewalld / systemctl restart firewalld.service
